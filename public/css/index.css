@@ -1,0 +1,85 @@
+.thread-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    height: 350px;
+}
+
+.thread-card:hover {
+    transform: scale(1.05);
+    box-shadow: rgba(118, 148, 178, 0.2) 0px 8px 24px;
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.c-details span {
+    font-weight: 300;
+    font-size: 13px
+}
+
+.thread-card-profile {
+    width: 50px;
+    height: 50px;
+    background-color: #eee;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 39px
+}
+
+.thread-card-title {
+    font-size: 1.4rem;
+    overflow: hidden;
+}
+
+.thread-card-title.long-title {
+    font-size: 1.0rem;
+}
+
+.thread-card-title.extra-long-title {
+    font-size: 1.2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    /*limit to 4 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.thread-card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* .badge span {
+    background-color: #fffbec;
+    width: 60px;
+    height: 25px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    display: flex;
+    color: #fed85d;
+    justify-content: center;
+    align-items: center
+} */
+
+/* .progress {
+    height: 10px;
+    border-radius: 10px
+}
+
+.progress div {
+    background-color: red
+}
+
+.text1 {
+    font-size: 14px;
+    font-weight: 600
+}
+
+.text2 {
+    color: #a5aec0
+} */
