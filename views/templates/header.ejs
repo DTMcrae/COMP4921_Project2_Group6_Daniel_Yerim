@@ -53,7 +53,7 @@
           </a>
           <ul class="nav nav-tabs">
             <% for(var i=0; i<locals.navLinks.length; i++) { %>
-              <% if (!loggedIn && (locals.navLinks[i].name == "Logout")) {continue;} %>
+              <% if (!loggedIn && (locals.navLinks[i].name == "Logout" || locals.navLinks[i].name == "Create")) {continue;} %>
               <% if (loggedIn && (locals.navLinks[i].name == "Login" || locals.navLinks[i].name == "Signup")) {continue;} %>
 
             <li class="nav-item">

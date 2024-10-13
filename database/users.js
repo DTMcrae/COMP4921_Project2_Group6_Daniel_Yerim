@@ -3,12 +3,13 @@ const db = include("databaseConnection");
 async function createUser(postData) {
     let createUserSQL = `
 		INSERT INTO user
-		(email, password)
+		(username, email, password)
 		VALUES
-		(:email, :passwordHash);
+		(:username, :email, :passwordHash);
 	`;
 
     let params = {
+        username: postData.username,
         email: postData.email,
         passwordHash: postData.hashedPassword,
     };
