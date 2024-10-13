@@ -11,14 +11,24 @@ body {
 }
 
 .main-container {
-    padding: 50px;
+    padding: 50px 20px 20px 20px;
+    margin-top: 60px;
 }
 
 .navbar {
     padding: 15px;
 }
 
+.nav-icon {
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
 /* background toggle button */
+.theme-toggle {
+    padding-left: 10px;
+}
+
 .theme-toggle-checkbox {
     position: absolute;
     opacity: 0;

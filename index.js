@@ -16,7 +16,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 const router = include("routes/router");
 const auth = include("routes/auth");
-// const expireTime = 60 * 60 * 1000; //expires after an hour  (hours * minutes * seconds * millis)
+const mypage = include("routes/mypage");
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -50,13 +50,18 @@ app.use(
         resave: true,
     })
 );
-
 const navLinks = [
     { name: "Home", link: "/" },
-    { name: "Create", link: "/create" },
-    { name: "Login", link: "/login" },
-    { name: "Signup", link: "/signup" },
-    { name: "Logout", link: "/logout" },
+    { name: "Create", link: "/create", requiresLogin: true },
+    { name: "Login", link: "/login", requiresLogin: false },
+    { name: "Signup", link: "/signup", requiresLogin: false },
+    { name: "Logout", link: "/logout", requiresLogin: true },
+    {
+        name: "My Profile",
+        link: "/mypage",
+        icon: "bx bxs-user-account",
+        requiresLogin: true,
+    },
 ];
 
 // function isValidSession(req) {
@@ -92,6 +97,7 @@ app.get("/", (req, res) => {
 app.use(express.static(__dirname + "/public"));
 app.use("/", router);
 app.use("/", auth);
+app.use("/", mypage);
 app.get("*", (req, res) => {
     res.status(404);
     res.render("404");

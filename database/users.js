@@ -83,4 +83,26 @@ async function getUserId(email) {
     }
 }
 
-module.exports = { createUser, getUserByEmail, getUserId };
+async function getUserInfo(userId) {
+    let getUsersSQL = `SELECT user_id, username, email FROM user WHERE user_id = ?;`;
+
+    try {
+        const [results] = await db.query(getUsersSQL, [userId]);
+
+        if (results.length === 0) {
+            // No user found with the given email
+            console.log("No user found with the given id");
+            return [];
+        }
+
+        console.log("Successfully retrieved a user info");
+        console.log(results[0]);
+        return results;
+    } catch (err) {
+        console.log("Error getting a user info");
+        console.log(err);
+        return false;
+    }
+}
+
+module.exports = { createUser, getUserByEmail, getUserId, getUserInfo };

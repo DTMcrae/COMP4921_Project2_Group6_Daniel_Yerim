@@ -17,6 +17,26 @@ async function printMySQLVersion() {
     }
 }
 
+async function addPost(postData) {
+    const insertPostSQL = `
+    INSERT INTO thread (user_id, title, text, views, likes, created_date, last_update) 
+    VALUES (?, ?, ?, 0, 0, NOW(), NOW());
+    `;
+
+    try {
+        const results = await db.query(insertPostSQL, [
+            postData.user_id,
+            postData.title,
+            postData.description,
+        ]);
+        return results;
+    } catch (error) {
+        console.error("Error adding post:", error);
+        throw error;
+    }
+}
+
 module.exports = {
     printMySQLVersion,
+    addPost,
 };

@@ -1,0 +1,56 @@
+<%- include("templates/header") %>
+<div class="container emp-profile">
+    <!-- <form method="post"> -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                    alt=""
+                />
+                <div class="file btn btn-lg btn-primary">
+                    Change Photo
+                    <input type="file" name="file" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h4><%= user.username %></h4>
+                <h5><%= user.email %></h5>
+            </div>
+        </div>
+        <!-- <div class="col-md-2">
+            <input
+                type="submit"
+                class="profile-edit-btn"
+                name="btnAddMore"
+                value="Edit Profile"
+            />
+        </div> -->
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <button type="button" class="btn btn-light mypage-btn">
+                    Posts
+                </button>
+            </div>
+            <div class="col-sm">
+                <button type="button" class="btn btn-light mypage-btn">
+                    Comments
+                </button>
+            </div>
+            <div class="col-sm">
+                <button
+                    type="button"
+                    class="btn btn-light mypage-btn"
+                    id="createPostBtn"
+                >
+                    + Create Post
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("templates/footer") %>

@@ -31,6 +31,8 @@
         <link rel="stylesheet" href="/css/common.css" />
         <link rel="stylesheet" href="/css/index.css" />
         <link rel="stylesheet" href="/css/login.css" />
+        <link rel="stylesheet" href="/css/mypage.css" />
+        <link rel="stylesheet" href="/css/create.css" />
 
         <!-- Boxicons -->
         <link
@@ -41,10 +43,10 @@
         <!-- Custom JS -->
         <script src="/js/threadCard.js"></script>
         <script src="/js/common.js"></script>
+        <script src="/js/mypage.js"></script>
     </head>
     <body>
         <%- include("svg") %>
-        <!-- <header class="d-flex flex-wrap justify-content-center py-3 border-bottom"> -->
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary fixed-top">
           <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
@@ -53,18 +55,25 @@
           </a>
           <ul class="nav nav-tabs">
             <% for(var i=0; i<locals.navLinks.length; i++) { %>
-              <% if (!loggedIn && (locals.navLinks[i].name == "Logout" || locals.navLinks[i].name == "Create")) {continue;} %>
-              <% if (loggedIn && (locals.navLinks[i].name == "Login" || locals.navLinks[i].name == "Signup")) {continue;} %>
-
-            <li class="nav-item">
-              <a href="<%= locals.navLinks[i].link %>" class="nav-link 
-                <% if (locals.navLinks[i].link == locals.currentURL) { %>active<% } %> text-dark" aria-current="page">
-                <%= locals.navLinks[i].name %>
-              </a>
-            </li>
+              <% if (!loggedIn && locals.navLinks[i].requiresLogin) { continue; } %>
+              <% if (loggedIn && !locals.navLinks[i].requiresLogin) { continue; } %>
+          
+              <li class="nav-item">
+                <a href="<%= locals.navLinks[i].link %>" class="nav-link 
+                  <% if (locals.navLinks[i].link == locals.currentURL) { %>active<% } %> text-dark" aria-current="page">
+                  
+                  <!-- my page icon -->
+                  <% if (loggedIn && locals.navLinks[i].icon) { %>
+                    <i class="<%= locals.navLinks[i].icon %> nav-icon"></i>
+                  <% } else { %>
+                    <%= locals.navLinks[i].name %>
+                  <% } %>
+                  
+                </a>
+              </li>
             <% } %>
           </ul>
-          <label>
+          <label class="theme-toggle">
             <input class="theme-toggle-checkbox" type="checkbox">
             <div class="toggle-slot">
               <div class="sun-icon-wrapper">

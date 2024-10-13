@@ -1,8 +1,8 @@
-const auth = require("express").Router();
+const router = require("express").Router();
 
 const mongoSanitize = require("express-mongo-sanitize");
-auth.use(mongoSanitize({ replaceWith: "%" }));
-auth.use(mongoSanitize({ replaceWith: "%" }));
+router.use(mongoSanitize({ replaceWith: "%" }));
+router.use(mongoSanitize({ replaceWith: "%" }));
 
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
@@ -17,14 +17,14 @@ function isValidSession(req) {
     return false;
 }
 
-auth.get("/signup", (req, res) => {
+router.get("/signup", (req, res) => {
     if (isValidSession(req)) {
         return res.redirect("/");
     }
     res.render("signup");
 });
 
-auth.get("/login", (req, res) => {
+router.get("/login", (req, res) => {
     if (isValidSession(req)) {
         return res.redirect("/");
     }
@@ -32,12 +32,12 @@ auth.get("/login", (req, res) => {
     res.render("login", { errorMessage });
 });
 
-auth.get("/logout", (req, res) => {
+router.get("/logout", (req, res) => {
     req.session.destroy();
     res.redirect("/");
 });
 
-auth.post("/signupSubmit", async (req, res) => {
+router.post("/signupSubmit", async (req, res) => {
     var username = req.body.username;
     var email = req.body.email;
     var password = req.body.password;
@@ -85,7 +85,7 @@ auth.post("/signupSubmit", async (req, res) => {
     }
 });
 
-auth.post("/loginSubmit", async (req, res) => {
+router.post("/loginSubmit", async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -128,4 +128,4 @@ auth.post("/loginSubmit", async (req, res) => {
     }
 });
 
-module.exports = auth;
+module.exports = router;
