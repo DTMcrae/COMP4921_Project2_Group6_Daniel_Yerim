@@ -1,0 +1,96 @@
+<%- include("templates/header") %>
+
+<main class="thread-container">
+  <!-- Thread Details -->
+  <div class="thread-main">
+    <div class="thread-header">
+      <div class="thread-info">
+        <h1 class="thread-title"><%= thread.title %></h1>
+        <p class="thread-owner">Posted by: <%= thread.owner %></p>
+        <p class="thread-date"><%= thread.uploadDate %></p>
+      </div>
+    </div>
+    <div class="thread-body">
+      <p><%= thread.body %></p>
+    </div>
+    <div class="thread-stats">
+      <span>Likes: <%= thread.likes %></span> |
+      <span>Comments: <%= thread.comments %></span>
+    </div>
+  </div>
+
+  <!-- Comment Section -->
+  <div class="comment-section">
+    <!-- Add a comment box -->
+    <% if(locals.loggedIn && loggedIn) {%>
+    <div class="add-comment">
+      <form action="/add-comment" method="POST">
+        <textarea
+          name="commentBody"
+          rows="3"
+          placeholder="Add a comment..."
+          required
+        ></textarea>
+        <button class="btn btn-outline-secondary" type="submit">
+          Post Comment
+        </button>
+      </form>
+    </div>
+    <%}%>
+    <br>
+    <div class="comments-display">
+    <% comments.forEach(function(comment) { %>
+        <div class="comment-thread">
+            <div class="comment-container" style="margin-left: <%= comment.depth * 40 %>px;">
+                <!-- Vertical Line for Nested Replies -->
+                <div class="line-vertical"></div>
+                <div class="line-horizontal"></div>
+                <div class="comment-content">
+                    <div class="comment-header">
+                        <img src="<%= comment.profilePicture %>" alt="Profile Picture" class="profile-pic">
+                        <div class="comment-info">
+                            <p class="commenter-username"><%= comment.username %></p>
+                            <p class="comment-date"><%= comment.commentDate %></p>
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        <p><%= comment.body %></p>
+                    </div>
+                    <div class="comment-actions">
+                        <span>Likes: <%= comment.likeCount %></span> 
+                        <% if(locals.loggedIn && loggedIn) {%> |
+                        <button class="reply-button" data-comment-id="<%= comment.id %>">Reply</button>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+  </div>
+</main>
+
+<!-- Modal for Reply -->
+<div id="replyModal" class="modal commentModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Reply to Comment</h3>
+    <div id="modalCommentBody">
+      <!-- Selected comment's body will appear here -->
+    </div>
+    <form action="/add-reply" method="POST" id="replyForm">
+      <textarea
+        name="replyBody"
+        rows="3"
+        placeholder="Write your reply here..."
+        required
+      ></textarea>
+      <input type="hidden" name="parentCommentId" id="parentCommentId" />
+      <button type="submit">Submit Reply</button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/commentReply.js"></script>
+<%- include("templates/footer") %>

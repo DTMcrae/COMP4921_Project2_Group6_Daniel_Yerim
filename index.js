@@ -17,6 +17,7 @@ const app = express();
 const router = include("routes/router");
 const auth = include("routes/auth");
 const mypage = include("routes/mypage");
+const thread = include("routes/thread");
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -98,6 +99,7 @@ app.use(express.static(__dirname + "/public"));
 app.use("/", router);
 app.use("/", auth);
 app.use("/", mypage);
+app.use("/", thread);
 app.get("*", (req, res) => {
     res.status(404);
     res.render("404");
