@@ -4,7 +4,6 @@ const users = include("database/users");
 const db_utils = include("database/db_utils");
 
 router.get("/thread", async (req, res) => {
-
   const thread = {
     title: "Why does banning drug use not work?",
     owner: "Reddit",
@@ -38,7 +37,7 @@ router.get("/thread", async (req, res) => {
     likes: 12,
     uploadDate: "2 days ago",
     comments: 5,
-  }
+  };
 
   const comments = [
     {
@@ -95,7 +94,42 @@ router.get("/thread", async (req, res) => {
   let loggedIn = req.session.authenticated;
   let owner = false;
 
-  res.render("thread", {loggedIn: loggedIn, owner: owner, thread: thread, comments:comments});
+  res.render("thread", {
+    loggedIn: loggedIn,
+    owner: owner,
+    thread: thread,
+    comments: comments,
+  });
+});
+
+router.get("/create", (req, res) => {
+  if (!req.session.authenticated) {
+    return res.redirect("/login");
+  }
+
+  res.render("create");
+});
+
+router.post("/create/addPost", async (req, res) => {
+  const { title, description } = req.body;
+
+  if (!title || !description) {
+    return res.status(400).send("Title and description are required.");
+  }
+
+  const postData = {
+    title,
+    description,
+    user_id: req.session.userId,
+  };
+
+  try {
+    const result = await db_utils.addPost(postData);
+    res.redirect("/thread");
+  } catch (error) {
+    console.error("Error adding post:", error);
+    res.status(500).send("Error creating post.");
+  }
 });
 
 module.exports = router;

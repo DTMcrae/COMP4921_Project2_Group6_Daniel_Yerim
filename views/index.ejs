@@ -1,375 +1,105 @@
 <%- include("templates/header") %>
 <div class="container mt-5 mb-3">
-    <h1>New Threads</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-mailchimp"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0 thread-card-username">Mailchimp</h6>
-                            <span>1 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Design</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        The Toronto Maple Leafs have been shut out for the first
-                        time since November 20, 2021 The Toronto Maple Leafs
-                        have been shut out for the first time since November 20,
-                        2021 The Toronto Maple Leafs have been shut out for the
-                        first time since November 20, 2021 021 The Toronto Maple
-                        Leafs have been shut out for the first time since
-                        November 20, 2021
-                    </h3>
-                    <div class="thread-card-text">
-                        Longest active streak comes to an end. 227 regular
-                        season games (8th all-time) and 252 games, regular
-                        season and playoffs (3rd all-time). The Pittsburg
-                        Penguins were the last team to hold the leafs scoreless,
-                        winning 2-0
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >32 Applied
-                                <span class="text2">of 50 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">37</span>
-                </div>
+  <h1>New Threads</h1>
+  <div class="row">
+    <% recentThreads.forEach(thread => { %>
+    <!-- Loop through recentThreads -->
+    <div class="col-md-4">
+      <div
+        class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
+      >
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+            <div class="thread-card-profile">
+              <!-- Check if profile_id is null -->
+              <% if (thread.profile_id == null) { %>
+              <i class="bx bxl-mailchimp"></i>
+              <!-- Default icon -->
+              <% } else { %>
+              <!-- Replace this with actual logic to get user profile icon -->
+              <img
+                src="<%= thread.profileIconUrl %>"
+                alt="Profile Icon"
+                class="profile-icon"
+              />
+              <!-- User's profile icon -->
+              <% } %>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-dribbble"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0">Dribbble</h6>
-                            <span>4 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Product</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        Game Thread: Toronto Maple Leafs (0-0-0) at Montreal
-                        Canadiens(0-0-0) - 09 October 2024 - 7:00PM EST
-                    </h3>
-                    <div class="thread-card-text">
-                        Hockeymod bot is sleeping apparently, so dropping this
-                        one in by hand. Sportsnet tonight.
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >42 Applied
-                                <span class="text2">of 70 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">5</span>
-                </div>
+            <div class="ms-2 c-details">
+              <h6 class="mb-0 thread-card-username"><%= thread.username %></h6>
+              <!-- Display username -->
+              <span></span>
             </div>
+          </div>
         </div>
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-reddit"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0">Reddit</h6>
-                            <span>2 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Design</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        Why does banning drug use not work?
-                    </h3>
-                    <div class="thread-card-text">
-                        My family is all voting for the Cons and I'm getting
-                        worried. Their biggest gripe with the NDP is their free
-                        safe injection site policy which they have somehow
-                        magnified into a "infinite free drugs" madness in their
-                        heads. They see more people on the streets and believe
-                        the NDP is responsible for it (are they?). They aren't
-                        skeptical about the Cons upholding their promise to keep
-                        drug users off streets, don't have a problem with that
-                        Rustad doesn't have a plan, and want to "let them try".
-                        My knowledge in politics is limited and I don't know how
-                        to explain to them why simply sweeping people off
-                        streets will do nothing. Frankly, I myself am against
-                        drug use and weed-smoking culture and think the safe
-                        injection site policy could be a Band-Aid patch that
-                        doesn't solve the long-term problem of addiction, so I
-                        don't know what the best thing to vote for is. Please
-                        educate me on your thoughts, thank you. Please no
-                        personal attacks. I'm here to learn and openly accept
-                        opinions but please don't attack me or my family. Edit:
-                        wow, thanks for all the replies, I can't keep up so
-                        sorry I'm not responding to all of them. I want to add
-                        on what my family thinks. They want stricter enforcement
-                        and drug abusers swept off the streets. They don't
-                        necessarily want them dead and it's not that they don't
-                        care about their lives, but they want drug users to
-                        uphold their responsibility to stay off addiction. I
-                        hope that helps
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >52 Applied
-                                <span class="text2">of 100 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">12</span>
-                </div>
-            </div>
+        <div class="mt-5">
+          <h3 class="thread-card-title"><%= thread.title %></h3>
+          <!-- Display thread title -->
+          <div class="thread-card-text"><%= thread.text %></div>
+          <!-- Display thread text -->
         </div>
+        <div class="mt-3">
+          <i class="bx bx-like"></i>
+          <span class="thread-card-likes ms-1"><%= thread.likes %></span>
+          <!-- Display thread likes -->
+          <i class="bx bx-comment-detail ms-3"></i>
+          <span class="thread-card-likes ms-1"><%= thread.comments %></span>
+        </div>
+      </div>
     </div>
-    <hr class="hr" />
-    <h1>Popular</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-mailchimp"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0 thread-card-username">Mailchimp</h6>
-                            <span>1 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Design</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        The Toronto Maple Leafs have been shut out for the first
-                        time since November 20, 2021 The Toronto Maple Leafs
-                        have been shut out for the first time since November 20,
-                        2021 The Toronto Maple Leafs have been shut out for the
-                        first time since November 20, 2021 021 The Toronto Maple
-                        Leafs have been shut out for the first time since
-                        November 20, 2021
-                    </h3>
-                    <div class="thread-card-text">
-                        Longest active streak comes to an end. 227 regular
-                        season games (8th all-time) and 252 games, regular
-                        season and playoffs (3rd all-time). The Pittsburg
-                        Penguins were the last team to hold the leafs scoreless,
-                        winning 2-0
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >32 Applied
-                                <span class="text2">of 50 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">37</span>
-                </div>
+    <% }); %>
+    <!-- End of loop -->
+  </div>
+
+  <hr class="hr" />
+  <h1>Popular</h1>
+  <div class="row">
+    <% likedThreads.forEach(thread => { %>
+    <div class="col-md-4">
+      <div
+        class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
+      >
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+            <div class="thread-card-profile">
+              <!-- Check if profile_id is null -->
+              <% if (thread.profile_id == null) { %>
+              <i class="bx bxl-mailchimp"></i>
+              <!-- Default icon -->
+              <% } else { %>
+              <!-- Replace this with actual logic to get user profile icon -->
+              <img
+                src="<%= thread.profileIconUrl %>"
+                alt="Profile Icon"
+                class="profile-icon"
+              />
+              <!-- User's profile icon -->
+              <% } %>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-dribbble"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0">Dribbble</h6>
-                            <span>4 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Product</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        Game Thread: Toronto Maple Leafs (0-0-0) at Montreal
-                        Canadiens(0-0-0) - 09 October 2024 - 7:00PM EST
-                    </h3>
-                    <div class="thread-card-text">
-                        Hockeymod bot is sleeping apparently, so dropping this
-                        one in by hand. Sportsnet tonight.
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >42 Applied
-                                <span class="text2">of 70 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">5</span>
-                </div>
+            <div class="ms-2 c-details">
+              <h6 class="mb-0 thread-card-username"><%= thread.username %></h6>
+              <!-- Display username -->
+              <span></span>
             </div>
+          </div>
         </div>
-        <div class="col-md-4">
-            <div
-                class="thread-card p-3 mb-2 d-flex flex-column justify-content-between"
-            >
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex flex-row align-items-center">
-                        <div class="thread-card-profile">
-                            <i class="bx bxl-reddit"></i>
-                        </div>
-                        <div class="ms-2 c-details">
-                            <h6 class="mb-0">Reddit</h6>
-                            <span>2 days ago</span>
-                        </div>
-                    </div>
-                    <!-- <div class="badge"><span>Design</span></div> -->
-                </div>
-                <div class="mt-5">
-                    <h3 class="thread-card-title">
-                        Why does banning drug use not work?
-                    </h3>
-                    <div class="thread-card-text">
-                        My family is all voting for the Cons and I'm getting
-                        worried. Their biggest gripe with the NDP is their free
-                        safe injection site policy which they have somehow
-                        magnified into a "infinite free drugs" madness in their
-                        heads. They see more people on the streets and believe
-                        the NDP is responsible for it (are they?). They aren't
-                        skeptical about the Cons upholding their promise to keep
-                        drug users off streets, don't have a problem with that
-                        Rustad doesn't have a plan, and want to "let them try".
-                        My knowledge in politics is limited and I don't know how
-                        to explain to them why simply sweeping people off
-                        streets will do nothing. Frankly, I myself am against
-                        drug use and weed-smoking culture and think the safe
-                        injection site policy could be a Band-Aid patch that
-                        doesn't solve the long-term problem of addiction, so I
-                        don't know what the best thing to vote for is. Please
-                        educate me on your thoughts, thank you. Please no
-                        personal attacks. I'm here to learn and openly accept
-                        opinions but please don't attack me or my family. Edit:
-                        wow, thanks for all the replies, I can't keep up so
-                        sorry I'm not responding to all of them. I want to add
-                        on what my family thinks. They want stricter enforcement
-                        and drug abusers swept off the streets. They don't
-                        necessarily want them dead and it's not that they don't
-                        care about their lives, but they want drug users to
-                        uphold their responsibility to stay off addiction. I
-                        hope that helps
-                    </div>
-                    <!-- <div class="mt-5">
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style="width: 50%"
-                                aria-valuenow="50"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            ></div>
-                        </div>
-                        <div class="mt-3">
-                            <span class="text1"
-                                >52 Applied
-                                <span class="text2">of 100 capacity</span></span
-                            >
-                        </div>
-                    </div> -->
-                </div>
-                <div class="mt-3">
-                    <i class="bx bx-like"></i>
-                    <span class="thread-card-likes">12</span>
-                </div>
-            </div>
+        <div class="mt-5">
+          <h3 class="thread-card-title"><%= thread.title %></h3>
+          <!-- Display thread title -->
+          <div class="thread-card-text"><%= thread.text %></div>
+          <!-- Display thread text -->
         </div>
+        <div class="mt-3">
+          <i class="bx bx-like"></i>
+          <span class="thread-card-likes ms-1"><%= thread.likes %></span>
+          <!-- Display thread likes -->
+          <i class="bx bx-comment-detail ms-3"></i>
+          <span class="thread-card-likes ms-1"><%= thread.comments %></span>
+          <!-- Display thread comments -->
+        </div>
+      </div>
     </div>
+    <% }); %>
+    <!-- End of loop -->
+  </div>
 </div>
-<%- include("templates/footer") %>

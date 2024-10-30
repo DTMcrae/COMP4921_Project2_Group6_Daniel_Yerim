@@ -37,32 +37,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 var mongoStore = MongoStore.create({
-    mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/sessions`,
-    crypto: {
-        secret: mongodb_session_secret,
-    },
+  mongoUrl: `mongodb+srv://${mongodb_user}:${mongodb_password}@${mongodb_host}/sessions`,
+  crypto: {
+    secret: mongodb_session_secret,
+  },
 });
 
 app.use(
-    session({
-        secret: process.env.MONGODB_SESSION_SECRET,
-        store: mongoStore, //default is memory store
-        saveUninitialized: false,
-        resave: true,
-    })
+  session({
+    secret: process.env.MONGODB_SESSION_SECRET,
+    store: mongoStore, //default is memory store
+    saveUninitialized: false,
+    resave: true,
+  })
 );
 const navLinks = [
-    { name: "Home", link: "/" },
-    { name: "Create", link: "/create", requiresLogin: true },
-    { name: "Login", link: "/login", requiresLogin: false },
-    { name: "Signup", link: "/signup", requiresLogin: false },
-    { name: "Logout", link: "/logout", requiresLogin: true },
-    {
-        name: "My Profile",
-        link: "/mypage",
-        icon: "bx bxs-user-account",
-        requiresLogin: true,
-    },
+  { name: "Home", link: "/" },
+  { name: "Create", link: "/create", requiresLogin: true },
+  { name: "Login", link: "/login", requiresLogin: false },
+  { name: "Signup", link: "/signup", requiresLogin: false },
+  { name: "Logout", link: "/logout", requiresLogin: true },
+  {
+    name: "My Profile",
+    link: "/mypage",
+    icon: "bx bxs-user-account",
+    requiresLogin: true,
+  },
 ];
 
 // function isValidSession(req) {
@@ -73,26 +73,42 @@ const navLinks = [
 // }
 
 function sessionValidation(req, res, next) {
-    if (isValidSession(req)) {
-        next();
-    } else {
-        res.redirect("/login");
-    }
+  if (isValidSession(req)) {
+    next();
+  } else {
+    res.redirect("/login");
+  }
 }
 
 //middle ware
 app.use("/", (req, res, next) => {
-    app.locals.navLinks = navLinks;
-    app.locals.currentURL = url.parse(req.url).pathname;
-    // res.locals.loggedIn = req.session.email ? true : false;
-    res.locals.loggedIn = req.session.authenticated || false;
-    res.locals.errorMessage = null;
-    next();
+  app.locals.navLinks = navLinks;
+  app.locals.currentURL = url.parse(req.url).pathname;
+  // res.locals.loggedIn = req.session.email ? true : false;
+  res.locals.loggedIn = req.session.authenticated || false;
+  res.locals.errorMessage = null;
+  next();
 });
 
-app.get("/", (req, res) => {
-    const loggedIn = req.session.authenticated || false;
-    res.render("index", { loggedIn: loggedIn });
+app.get("/", async (req, res) => {
+  const loggedIn = req.session.authenticated || false;
+
+  try {
+    const recentThreads = await db_utils.getRecentThreads();
+    const likedThreads = await db_utils.getLikedThreads();
+
+    // console.log("recentThreads:", recentThreads);
+    // console.log("likedThreads:", likedThreads);
+
+    res.render("index", {
+      loggedIn: loggedIn,
+      recentThreads: recentThreads,
+      likedThreads: likedThreads,
+    });
+  } catch (error) {
+    console.error("Error fetching threads:", error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
 app.use(express.static(__dirname + "/public"));
@@ -101,10 +117,10 @@ app.use("/", auth);
 app.use("/", mypage);
 app.use("/", thread);
 app.get("*", (req, res) => {
-    res.status(404);
-    res.render("404");
+  res.status(404);
+  res.render("404");
 });
 
 app.listen(port, () => {
-    console.log("Node application listening on port " + port);
+  console.log("Node application listening on port " + port);
 });
