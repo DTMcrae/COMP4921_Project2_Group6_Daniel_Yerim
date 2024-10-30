@@ -27,6 +27,12 @@
     font-size: 39px
 }
 
+.thread-card-profile img {
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+}
+
 .thread-card-title {
     font-size: 1.4rem;
     overflow: hidden;

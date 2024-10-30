@@ -4,14 +4,13 @@ const threadDB = include("database/threads");
 const commentDB = include("database/comments");
 
 router.get("/thread/:id", async (req, res) => {
-
   const thread_id = req.params.id;
 
   console.log("Thread ID: " + thread_id);
 
   const thread = await threadDB.getThread(thread_id);
 
-  if(!thread) {
+  if (!thread) {
     res.render("404");
     return;
   }
@@ -23,7 +22,8 @@ router.get("/thread/:id", async (req, res) => {
   let owner = false;
 
   res.render("thread", {
-    loggedIn: loggedIn, user_id:user_id,
+    loggedIn: loggedIn,
+    user_id: user_id,
     owner: owner,
     thread: thread,
     comments: comments,
@@ -76,7 +76,7 @@ router.post("/create/addPost", async (req, res) => {
   };
 
   try {
-    const result = await db_utils.addPost(postData);
+    const result = await threadDB.addPost(postData);
     res.redirect("/thread");
   } catch (error) {
     console.error("Error adding post:", error);

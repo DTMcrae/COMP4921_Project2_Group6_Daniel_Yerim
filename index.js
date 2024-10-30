@@ -97,8 +97,8 @@ app.get("/", async (req, res) => {
     const recentThreads = await db_utils.getRecentThreads();
     const likedThreads = await db_utils.getLikedThreads();
 
-    // console.log("recentThreads:", recentThreads);
-    // console.log("likedThreads:", likedThreads);
+    console.log("Recent Threads:", recentThreads);
+    console.log("Liked Threads:", likedThreads);
 
     res.render("index", {
       loggedIn: loggedIn,

@@ -1,16 +1,8 @@
 const router = require("express").Router();
 
-// const cloudinary = require("cloudinary").v2;
-
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_CLOUD_KEY,
-//     api_secret: process.env.CLOUDINARY_CLOUD_SECRET,
-// });
-
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const multer = require("multer");
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
 
 const mongoSanitize = require("express-mongo-sanitize");
 router.use(mongoSanitize({ replaceWith: "%" }));

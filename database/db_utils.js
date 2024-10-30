@@ -17,31 +17,13 @@ async function printMySQLVersion() {
   }
 }
 
-async function addPost(postData) {
-  const insertPostSQL = `
-    INSERT INTO thread (user_id, title, text, views, likes, created_date, last_update, comments) 
-    VALUES (?, ?, ?, 0, 0, NOW(), NOW(), 0);
-    `;
-
-  try {
-    const results = await db.query(insertPostSQL, [
-      postData.user_id,
-      postData.title,
-      postData.description,
-    ]);
-    return results;
-  } catch (error) {
-    console.error("Error adding post:", error);
-    throw error;
-  }
-}
-
 async function getRecentThreads() {
   try {
     const result = await db.query(`
-            SELECT t.*, u.username, u.profile_id
+            SELECT t.*, u.username, u.profile_id, p.cloudinary_url
             FROM thread AS t
             JOIN user AS u ON t.user_id = u.user_id
+            LEFT JOIN profile_images AS p ON u.profile_id = p.profile_id
             ORDER BY t.created_date DESC
             LIMIT 3
         `);
@@ -54,9 +36,10 @@ async function getRecentThreads() {
 async function getLikedThreads() {
   try {
     const result = await db.query(`
-            SELECT t.*, u.username, u.profile_id
+            SELECT t.*, u.username, u.profile_id, p.cloudinary_url
             FROM thread AS t
             JOIN user AS u ON t.user_id = u.user_id
+            LEFT JOIN profile_images AS p ON u.profile_id = p.profile_id
             ORDER BY t.likes DESC
             LIMIT 3
         `);
@@ -68,7 +51,6 @@ async function getLikedThreads() {
 
 module.exports = {
   printMySQLVersion,
-  addPost,
   getRecentThreads,
   getLikedThreads,
 };

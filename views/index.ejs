@@ -11,18 +11,15 @@
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
             <div class="thread-card-profile">
-              <!-- Check if profile_id is null -->
+              <!-- Display profile image -->
               <% if (thread.profile_id == null) { %>
               <i class="bx bxl-mailchimp"></i>
-              <!-- Default icon -->
               <% } else { %>
-              <!-- Replace this with actual logic to get user profile icon -->
               <img
-                src="<%= thread.profileIconUrl %>"
+                src="<%= thread.cloudinary_url %>"
                 alt="Profile Icon"
                 class="profile-icon"
               />
-              <!-- User's profile icon -->
               <% } %>
             </div>
             <div class="ms-2 c-details">
@@ -62,18 +59,15 @@
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-row align-items-center">
             <div class="thread-card-profile">
-              <!-- Check if profile_id is null -->
+              <!-- Display profile image -->
               <% if (thread.profile_id == null) { %>
               <i class="bx bxl-mailchimp"></i>
-              <!-- Default icon -->
               <% } else { %>
-              <!-- Replace this with actual logic to get user profile icon -->
               <img
-                src="<%= thread.profileIconUrl %>"
+                src="<%= thread.cloudinary_url %>"
                 alt="Profile Icon"
                 class="profile-icon"
               />
-              <!-- User's profile icon -->
               <% } %>
             </div>
             <div class="ms-2 c-details">
