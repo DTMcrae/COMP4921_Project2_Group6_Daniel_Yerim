@@ -18,6 +18,7 @@ const router = include("routes/router");
 const auth = include("routes/auth");
 const mypage = include("routes/mypage");
 const thread = include("routes/thread");
+const search = include("routes/search");
 
 /* secret information section */
 const mongodb_host = process.env.MONGODB_HOST;
@@ -116,6 +117,7 @@ app.use("/", router);
 app.use("/", auth);
 app.use("/", mypage);
 app.use("/", thread);
+app.use("/", search);
 app.get("*", (req, res) => {
   res.status(404);
   res.render("404");
