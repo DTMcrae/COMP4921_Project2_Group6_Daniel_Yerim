@@ -76,4 +76,29 @@ async function deleteThread(threadId) {
   }
 }
 
-module.exports = { getThread, addPost, getThreadByUserId, deleteThread };
+async function searchThreads(searchTerm) {
+  try {
+    const searchWithWildcard = `*${searchTerm}*`;
+
+    const searchThreadsQuery = `
+        SELECT 'thread' AS type, t.*, u.username, u.profile_id, p.cloudinary_url
+        FROM thread AS t
+        JOIN user AS u ON u.user_id = t.user_id
+        LEFT JOIN profile_images AS p ON p.profile_id = u.profile_id
+        WHERE MATCH (t.title, t.text) AGAINST (? IN BOOLEAN MODE)
+    `;
+    const [results] = await db.query(searchThreadsQuery, [searchWithWildcard]);
+    return results;
+  } catch (error) {
+    console.error("Error executing search query:", error);
+    throw error;
+  }
+}
+
+module.exports = {
+  getThread,
+  addPost,
+  getThreadByUserId,
+  deleteThread,
+  searchThreads,
+};

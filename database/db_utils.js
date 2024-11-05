@@ -49,26 +49,8 @@ async function getLikedThreads() {
   }
 }
 
-async function searchThreads(searchTerm) {
-  try {
-    const searchThreadsQuery = `
-        SELECT t.*, u.username, u.profile_id, p.cloudinary_url
-        FROM thread AS t
-        JOIN user AS u ON u.user_id = t.user_id
-        LEFT JOIN profile_images AS p ON p.profile_id = u.profile_id
-        WHERE MATCH (t.title, t.text) AGAINST (? IN NATURAL LANGUAGE MODE)
-    `;
-    const [results] = await db.query(searchThreadsQuery, [searchTerm]);
-    return results;
-  } catch (error) {
-    console.error("Error executing search query:", error);
-    throw error;
-  }
-}
-
 module.exports = {
   printMySQLVersion,
   getRecentThreads,
   getLikedThreads,
-  searchThreads,
 };

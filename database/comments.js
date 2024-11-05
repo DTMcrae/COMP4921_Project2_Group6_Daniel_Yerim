@@ -103,9 +103,27 @@ async function deleteComment(commentId) {
   }
 }
 
+async function searchComments(searchTerm) {
+  try {
+    const searchWithWildcard = `*${searchTerm}*`;
+
+    const searchThreadsQuery = `
+        SELECT 'comment' AS type, comment_id, thread_id, user_id, text, likes, created_date, parent_id
+        FROM comments
+        WHERE MATCH(text) AGAINST(? IN BOOLEAN MODE)
+    `;
+    const [results] = await db.query(searchThreadsQuery, [searchWithWildcard]);
+    return results;
+  } catch (error) {
+    console.error("Error executing search query:", error);
+    throw error;
+  }
+}
+
 module.exports = {
   getComments,
   addComment,
   getCommentsByUserId,
   deleteComment,
+  searchComments,
 };

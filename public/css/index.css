@@ -100,6 +100,20 @@
     margin-top: 30px;
 }
 
+.my-search-thread-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    height: 200px;
+}
+
+.my-search-comment-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    height: 150px;
+}
+
 /* .badge span {
     background-color: #fffbec;
     width: 60px;
