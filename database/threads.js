@@ -40,4 +40,40 @@ async function addPost(postData) {
   }
 }
 
-module.exports = { getThread, addPost };
+async function getThreadByUserId(userId) {
+  let getThreadSQL = `
+  SELECT * from thread where user_id = ?;
+    `;
+
+  try {
+    const results = await db.query(getThreadSQL, [userId]);
+    const thread = results[0];
+
+    if (thread.length > 0) {
+      return thread;
+    } else {
+      throw new Error("Failed to get thread");
+    }
+  } catch (err) {
+    console.log("Error getting thread.");
+    console.log(err);
+    return false;
+  }
+}
+
+async function deleteThread(threadId) {
+  let deleteThreadSQL = `
+  DELETE FROM thread WHERE thread_id = ?;
+    `;
+
+  try {
+    const results = await db.query(deleteThreadSQL, [threadId]);
+    return results;
+  } catch (err) {
+    console.log("Error deleting thread.");
+    console.log(err);
+    return false;
+  }
+}
+
+module.exports = { getThread, addPost, getThreadByUserId, deleteThread };

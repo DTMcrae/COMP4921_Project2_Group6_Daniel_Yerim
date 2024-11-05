@@ -1,6 +1,8 @@
 const router = require("express").Router();
 
 const users = include("database/users");
+const db_threads = include("database/threads");
+const comments = include("database/comments");
 // const db_utils = include("database/db_utils");
 
 const cloudinary = require("cloudinary").v2;
@@ -22,7 +24,8 @@ router.get("/mypage", async (req, res) => {
   try {
     const userId = req.session.userId;
     const userInfo = await users.getUserInfo(userId);
-    console.log("User Info:", userInfo);
+    const myThreads = await db_threads.getThreadByUserId(userId);
+    const myComments = await comments.getCommentsByUserId(userId);
 
     if (!userInfo.length) {
       return res.render("mypage", {
@@ -30,7 +33,11 @@ router.get("/mypage", async (req, res) => {
       });
     }
 
-    res.render("mypage", { user: userInfo[0] });
+    res.render("mypage", {
+      user: userInfo[0],
+      myThreads: myThreads,
+      myComments: myComments,
+    });
   } catch (error) {
     console.error("Error retrieving user information:", error);
     res.render("mypage", {

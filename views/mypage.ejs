@@ -41,10 +41,23 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
-        <button type="button" class="btn btn-light mypage-btn">Posts</button>
+        <button
+          type="button"
+          class="btn btn-light mypage-btn active"
+          id="overviewBtn"
+        >
+          Overview
+        </button>
       </div>
       <div class="col-sm">
-        <button type="button" class="btn btn-light mypage-btn">Comments</button>
+        <button type="button" class="btn btn-light mypage-btn" id="postsBtn">
+          Posts
+        </button>
+      </div>
+      <div class="col-sm">
+        <button type="button" class="btn btn-light mypage-btn" id="commentsBtn">
+          Comments
+        </button>
       </div>
       <div class="col-sm">
         <button
@@ -56,6 +69,94 @@
         </button>
       </div>
     </div>
+    <div class="threads-comments-container">
+      <div class="col" id="myThreads">
+        <% myThreads.forEach(thread => { %>
+        <div
+          class="my-thread-card p-3 mb-2 d-flex flex-column"
+          id="thread-card-<%= thread.thread_id %>"
+        >
+          <div class="mt my-thread-delete-container">
+            <button class="my-thread-delete" data-id="<%= thread.thread_id %>">
+              <i class="bx bx-x"></i>
+            </button>
+          </div>
+          <div class="mt my-thread-header-container">
+            <div class="my-thread-card-time">
+              Created at
+              <span><%= new Date(thread.created_date).toLocaleString() %></span>
+            </div>
+          </div>
+          <div
+            onclick="window.location.href='/thread/<%= thread.thread_id %>'"
+            style="cursor: pointer"
+          >
+            <div class="mt">
+              <h3 class="my-thread-card-title"><%= thread.title %></h3>
+              <!-- Display thread title -->
+              <div class="my-thread-card-text"><%= thread.text %></div>
+              <!-- Display thread text -->
+            </div>
+            <div class="mt-1">
+              <i class="bx bx-like"></i>
+              <span class="my-thread-card-likes ms-1"><%= thread.likes %></span>
+              <!-- Display thread likes -->
+              <i class="bx bx-comment-detail ms-3"></i>
+              <span class="my-thread-card-likes ms-1"
+                ><%= thread.comments_count || 0 %></span
+              >
+              <!-- Display thread comments -->
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+      <!-- end of threads -->
+      <div class="col" id="myComments">
+        <% myComments.forEach(comment => { %>
+        <div
+          class="my-thread-card p-3 mb-2 d-flex flex-column"
+          id="comment-card-<%= comment.comment_id %>"
+        >
+          <div class="mt my-thread-delete-container">
+            <div class="my-comment-delete" data-id="<%= comment.comment_id %>">
+              <i class="bx bx-x"></i>
+            </div>
+          </div>
+          <div class="mt my-thread-header-container">
+            <div class="my-thread-card-time">
+              Created at
+              <span
+                ><%= new Date(comment.created_date).toLocaleString() %></span
+              >
+            </div>
+          </div>
+          <div
+            onclick="window.location.href='/thread/<%= comment.thread_id %>'"
+            style="cursor: pointer"
+          >
+            <div class="mt">
+              <h3 class="my-comment-card-title">
+                <span>Commented On:</span> <%= comment.title %>
+              </h3>
+              <!-- Display thread title -->
+              <div class="my-thread-card-text"><%= comment.text %></div>
+              <!-- Display comment text -->
+            </div>
+            <div class="mt-1">
+              <i class="bx bx-like"></i>
+              <span class="my-thread-card-likes ms-1"
+                ><%= comment.likes %></span
+              >
+              <!-- Display comment likes -->
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+      <!-- end of comments -->
+    </div>
+    <!-- end of threads and comments container -->
   </div>
 </div>
 <%- include("templates/footer") %>

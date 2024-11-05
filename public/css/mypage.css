@@ -74,7 +74,58 @@
     border-color: #b5b5b5;
 }
 
-.mypage-btn:focus {
+.mypage-btn.active {
     background: #b5b5b5;
     outline: 0;
+}
+
+/* thread card */
+.threads-comments-container {
+    margin-top: 20px;
+}
+
+.my-thread-card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    height: 180px;
+    /* width: 100%; */
+}
+
+.my-thread-card-time {
+    font-size: 14px;
+
+}
+
+.my-thread-card-time span {
+    font-style: italic;
+    color: #6c757d;
+}
+
+.my-thread-header-container {
+    display: flex;
+    /* flex-direction: row; */
+    margin-left: auto;
+}
+
+.my-thread-delete-container {
+    display: flex;
+    margin-left: auto;
+}
+
+.my-thread-delete, .my-comment-delete {
+    padding-left: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.my-thread-delete i, .my-comment-delete i {
+    color: #FF4545;
+    font-size: 30px;
+}
+
+.my-comment-card-title span {
+    font-style: italic;
+    color: #6c757d;
 }

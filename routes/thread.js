@@ -84,4 +84,29 @@ router.post("/create/addPost", async (req, res) => {
   }
 });
 
+router.post("/deleteThread/:thread_id", async (req, res) => {
+  const thread_id = req.params.thread_id;
+
+  try {
+    await threadDB.deleteThread(thread_id);
+    res.json({ success: true, message: "Thread deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting Thread:", error);
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+});
+
+router.post("/deleteComment/:comment_id", async (req, res) => {
+  const comment_id = req.params.comment_id;
+  console.log("Comment ID: " + comment_id);
+
+  try {
+    await commentDB.deleteComment(comment_id);
+    res.json({ success: true, message: "Comment deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting Comment:", error);
+    res.status(500).json({ success: false, message: "Database error" });
+  }
+});
+
 module.exports = router;

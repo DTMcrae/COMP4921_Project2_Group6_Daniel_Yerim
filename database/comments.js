@@ -64,4 +64,48 @@ async function addComment(thread_id, user_id, text, parent_id = null) {
   }
 }
 
-module.exports = { getComments, addComment };
+async function getCommentsByUserId(user_id) {
+  let getCommentSQL = `
+    SELECT c.*, t.title
+    FROM comments AS c
+    JOIN thread AS t on t.thread_id = c.thread_id
+    WHERE c.user_id = ?;
+    `;
+
+  try {
+    const results = await db.query(getCommentSQL, [user_id]);
+    const comments = results[0];
+
+    if (comments.length > 0) {
+      return comments;
+    } else {
+      throw new Error("Failed to get comments");
+    }
+  } catch (err) {
+    console.log("Error getting comments.");
+    console.log(err);
+    return false;
+  }
+}
+
+async function deleteComment(commentId) {
+  let deleteCommentSQL = `
+  DELETE FROM comments WHERE comment_id = ?;
+    `;
+
+  try {
+    const results = await db.query(deleteCommentSQL, [commentId]);
+    return results;
+  } catch (err) {
+    console.log("Error deleting Comment.");
+    console.log(err);
+    return false;
+  }
+}
+
+module.exports = {
+  getComments,
+  addComment,
+  getCommentsByUserId,
+  deleteComment,
+};
