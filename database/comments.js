@@ -3,26 +3,28 @@ const db = include("databaseConnection");
 async function getComments(thread_id) {
   let getCommentSQL = `
     WITH RECURSIVE CommentHierarchy AS (
-    SELECT comment_id, thread_id, user_id, text, likes, created_date, parent_id, 
+    SELECT c.comment_id, c.thread_id, c.user_id, c.text, c.likes, c.created_date, c.parent_id, 
     0 AS depth,
-    CAST(comment_id AS CHAR(100)) AS order_key  -- Base order_key is the comment's ID
-
-    FROM comments
-    WHERE thread_id = 1 AND parent_id IS NULL
+    CAST(c.comment_id AS CHAR(100)) AS order_key  -- Base order_key is the comment's ID
+    FROM comments c
+    WHERE c.thread_id = 1 AND c.parent_id IS NULL
 
     UNION ALL
 
     SELECT c.comment_id, c.thread_id, c.user_id, c.text, c.likes, c.created_date, 
     c.parent_id, ch.depth + 1,
     CONCAT(ch.order_key, '-', c.comment_id) AS order_key  -- Append child ID to parent's order_key
-
     FROM comments c
     INNER JOIN CommentHierarchy ch ON c.parent_id = ch.comment_id
     WHERE c.thread_id = 1
     )
 
-    SELECT comment_id, user_id, text, likes, created_date, depth FROM CommentHierarchy
-    ORDER BY order_key;  -- Sort by hierarchical order_key
+    SELECT ch.comment_id, ch.user_id, u.username, ch.text, ch.likes, ch.created_date, ch.depth, 
+    pi.cloudinary_url
+    FROM CommentHierarchy ch
+    LEFT JOIN profile_images pi ON ch.user_id = pi.profile_id
+    LEFT JOIN user u ON ch.user_id = u.user_id
+    ORDER BY ch.order_key;  -- Sort by hierarchical order_key
     `;
 
   let params = {

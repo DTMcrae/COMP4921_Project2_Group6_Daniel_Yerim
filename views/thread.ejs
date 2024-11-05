@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="thread-body">
-      <p><%= thread.body %></p>
+      <p><%= thread.text %></p>
     </div>
     <div class="thread-stats">
       <span>Likes: <%= thread.likes %></span> |
@@ -35,7 +35,9 @@
           placeholder="Add a comment..."
           required
         ></textarea>
-        <button class="btn btn-outline-secondary" type="submit">Post Comment</button>
+        <button class="btn btn-outline-secondary" type="submit">
+          Post Comment
+        </button>
       </form>
     </div>
     <%}%>
@@ -52,14 +54,22 @@
           <div class="line-horizontal"></div>
           <div class="comment-content">
             <div class="comment-header">
+              <% if (comment.cloudinary_url == null) { %>
+              <i class="bx bxl-mailchimp profile-default"></i>
+              <% } else {%>
               <img
-                src="<%= comment.profilePicture %>"
+                src="<%= comment.cloudinary_url %>"
                 alt="Profile Picture"
                 class="profile-pic"
               />
+              <% } %>
               <div class="comment-info">
-                <p class="commenter-username"><%= comment.username %></p>
-                <p class="comment-date"><%= comment.commentDate %></p>
+                <span class="username"><%= comment.username %></span>
+                <span class="comment-date">
+                  <%= new Date(comment.created_date).toLocaleString('en-US', {
+                  weekday: 'short', year: 'numeric', month: 'short', day:
+                  'numeric', hour: '2-digit', minute: '2-digit' }) %>
+                </span>
               </div>
             </div>
             <div class="comment-body">
@@ -68,7 +78,10 @@
             <div class="comment-actions">
               <span>Likes: <%= comment.likes %></span>
               <% if(locals.loggedIn && loggedIn) {%> |
-              <button class="reply-button" data-comment-id="<%= comment.comment_id %>">
+              <button
+                class="reply-button"
+                data-comment-id="<%= comment.comment_id %>"
+              >
                 Reply
               </button>
               <%}%>
@@ -89,12 +102,16 @@
     <div id="modalCommentBody">
       <!-- Selected comment's body will appear here -->
     </div>
-    <form action="/thread/<%= thread.thread_id %>/addComment" method="POST" id="replyForm">
+    <form
+      action="/thread/<%= thread.thread_id %>/addComment"
+      method="POST"
+      id="replyForm"
+    >
       <input
-          type="hidden"
-          name="user_id"
-          value="<%= loggedIn ? user_id : '' %>"
-        />
+        type="hidden"
+        name="user_id"
+        value="<%= loggedIn ? user_id : '' %>"
+      />
       <textarea
         name="text"
         rows="3"
