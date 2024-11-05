@@ -225,3 +225,26 @@ body {
     margin-right: 15px;
     margin-bottom: 10px;
 }
+
+.like-dislike-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.like-button, .dislike-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.likes-count {
+    margin-left: 5px;
+}
+
+.like-button.active, .dislike-button.active {
+    color: #666;
+    font-weight: bold;
+}
+

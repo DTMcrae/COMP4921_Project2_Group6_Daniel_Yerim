@@ -39,3 +39,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("Comment Reply script loaded."); // Debugging
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .querySelectorAll(".like-button, .dislike-button")
+    .forEach((button) => {
+      button.addEventListener("click", async function () {
+        const entityId = this.getAttribute("data-entity-id");
+        const entityType = this.getAttribute("data-entity-type");
+        const isLike = this.classList.contains("like-button");
+
+        try {
+          const response = await fetch(`/${entityType}/${entityId}/like`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ is_like: isLike }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // Find the like and dislike buttons
+            const likeButton = this.closest(
+              ".like-dislike-buttons"
+            ).querySelector(".like-button");
+            const dislikeButton = this.closest(
+              ".like-dislike-buttons"
+            ).querySelector(".dislike-button");
+
+            // Update like count
+            const likeCountElement =
+              this.closest(".like-parent").querySelector(".likes-count");
+            if (likeCountElement) {
+              likeCountElement.textContent = data.updatedLikes;
+            }
+
+            // Toggle button styles based on the current action
+            if (isLike) {
+              // Liking an item
+              if (likeButton.classList.contains("active")) {
+                // If already liked, toggle off (unlike)
+                likeButton.classList.remove("active");
+              } else {
+                // If not liked, activate like and deactivate dislike
+                likeButton.classList.add("active");
+                dislikeButton.classList.remove("active");
+              }
+            } else {
+              // Disliking an item
+              if (dislikeButton.classList.contains("active")) {
+                // If already disliked, toggle off (undislike)
+                dislikeButton.classList.remove("active");
+              } else {
+                // If not disliked, activate dislike and deactivate like
+                dislikeButton.classList.add("active");
+                likeButton.classList.remove("active");
+              }
+            }
+          } else {
+            console.error("Error toggling like/dislike");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    });
+});

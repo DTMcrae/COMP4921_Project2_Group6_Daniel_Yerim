@@ -2,11 +2,11 @@
 
 <main class="thread-container">
   <!-- Thread Details -->
-  <div class="thread-main">
+  <div class="thread-main  like-parent">
     <div class="thread-header">
       <div class="thread-info">
         <h1 class="thread-title"><%= thread.title %></h1>
-        <p class="thread-owner">Posted by: <%= thread.owner %></p>
+        <p class="thread-owner">Posted by: <%= thread.username %></p>
         <p class="thread-date"><%= thread.uploadDate %></p>
       </div>
     </div>
@@ -14,9 +14,25 @@
       <p><%= thread.text %></p>
     </div>
     <div class="thread-stats">
-      <span>Likes: <%= thread.likes %></span> |
+      Likes:<span class="likes-count"><%= thread.likes %></span> |
       <span>Comments: <%= comments.length %></span>
     </div>
+    <% if(locals.loggedIn && loggedIn) {%>
+    <div class="like-dislike-buttons">
+    <button 
+        class="like-button <%= threadLikeStatus === 1 ? 'active' : '' %>" 
+        data-entity-id="<%= thread.thread_id %>" 
+        data-entity-type="thread">
+        👍 Like
+    </button>
+    <button 
+        class="dislike-button <%= threadLikeStatus === 0 ? 'active' : '' %>" 
+        data-entity-id="<%= thread.thread_id %>" 
+        data-entity-type="thread">
+        👎 Dislike
+    </button>
+</div>
+    <% } %>
   </div>
 
   <!-- Comment Section -->
@@ -75,9 +91,23 @@
             <div class="comment-body">
               <p><%= comment.text %></p>
             </div>
-            <div class="comment-actions">
-              <span>Likes: <%= comment.likes %></span>
-              <% if(locals.loggedIn && loggedIn) {%> |
+            <div class="comment-actions like-parent">
+              Likes: <span class="likes-count"><%= comment.likes %></span>
+              <% if(locals.loggedIn && loggedIn) {%> 
+              <div class="like-dislike-buttons">
+                <button 
+                  class="like-button <%= comment.likeStatus === 1 ? 'active' : '' %>" 
+                  data-entity-id="<%= comment.comment_id %>" 
+                  data-entity-type="comment">
+                    👍 Like
+                </button>
+                <button 
+                  class="dislike-button <%= comment.likeStatus === 0 ? 'active' : '' %>" 
+                  data-entity-id="<%= comment.comment_id %>" 
+                  data-entity-type="comment">
+                    👎 Dislike
+                </button>
+              </div>
               <button
                 class="reply-button"
                 data-comment-id="<%= comment.comment_id %>"
