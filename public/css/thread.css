@@ -259,3 +259,8 @@ body.dark-theme .dislike-button {
 body.dark-theme .comment-submit-btn {
     color: #FFF;
 }
+
+.thread-container p {
+    color: #000000;
+    font-weight: 400;
+}

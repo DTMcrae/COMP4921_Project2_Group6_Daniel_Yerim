@@ -77,7 +77,7 @@ router.post("/thread/:id/like", async (req, res) => {
     entity_id: thread_id,
     entity_type: "thread",
     is_like: is_like,
-  }
+  };
 
   try {
     const updatedLikes = await threadDB.toggleLikeThread(postData);
@@ -147,8 +147,9 @@ router.post("/create/addPost", async (req, res) => {
   };
 
   try {
-    const result = await threadDB.addPost(postData);
-    res.redirect("/thread");
+    const postId = await threadDB.addPost(postData);
+    console.log("Post ID: " + postId);
+    res.redirect(`/thread/${postId}`);
   } catch (error) {
     console.error("Error adding post:", error);
     res.status(500).send("Error creating post.");

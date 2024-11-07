@@ -35,7 +35,7 @@ async function addPost(postData) {
       postData.title,
       postData.description,
     ]);
-    return results;
+    return results[0].insertId;
   } catch (error) {
     console.error("Error adding post:", error);
     throw error;
