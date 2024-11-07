@@ -31,9 +31,6 @@ router.get("/thread/:id", async (req, res) => {
     }))
   );
 
-  console.log("Thread Liked: " + threadLikeStatus);
-  console.log("Comment Liked: " + JSON.stringify(commentLikeStatuses[0]));
-
   res.render("thread", {
     loggedIn: req.session.authenticated,
     user_id,
@@ -47,8 +44,6 @@ router.get("/thread/:id", async (req, res) => {
 router.post("/thread/:id/addComment", async (req, res) => {
   const thread_id = req.params.id;
   const { user_id, text, parent_id } = req.body;
-
-  console.log("Parent: " + parent_id);
 
   if (!text || !user_id) {
     res.status(400).send("Text and user_id are required.");
@@ -148,7 +143,6 @@ router.post("/create/addPost", async (req, res) => {
 
   try {
     const postId = await threadDB.addPost(postData);
-    console.log("Post ID: " + postId);
     res.redirect(`/thread/${postId}`);
   } catch (error) {
     console.error("Error adding post:", error);
@@ -170,7 +164,6 @@ router.post("/deleteThread/:thread_id", async (req, res) => {
 
 router.post("/deleteComment/:comment_id", async (req, res) => {
   const comment_id = req.params.comment_id;
-  console.log("Comment ID: " + comment_id);
 
   try {
     await commentDB.deleteComment(comment_id);

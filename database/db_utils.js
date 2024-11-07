@@ -20,7 +20,8 @@ async function printMySQLVersion() {
 async function getRecentThreads() {
   try {
     const result = await db.query(`
-            SELECT t.*, u.username, u.profile_id, p.cloudinary_url
+            SELECT t.*, u.username, u.profile_id, p.cloudinary_url,
+            (SELECT COUNT(*) FROM comments c WHERE c.thread_id = t.thread_id) AS commentCount
             FROM thread AS t
             JOIN user AS u ON t.user_id = u.user_id
             LEFT JOIN profile_images AS p ON u.profile_id = p.profile_id
@@ -36,7 +37,8 @@ async function getRecentThreads() {
 async function getLikedThreads() {
   try {
     const result = await db.query(`
-            SELECT t.*, u.username, u.profile_id, p.cloudinary_url
+            SELECT t.*, u.username, u.profile_id, p.cloudinary_url,
+            (SELECT COUNT(*) FROM comments c WHERE c.thread_id = t.thread_id) AS commentCount
             FROM thread AS t
             JOIN user AS u ON t.user_id = u.user_id
             LEFT JOIN profile_images AS p ON u.profile_id = p.profile_id

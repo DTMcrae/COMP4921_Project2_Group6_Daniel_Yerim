@@ -7,7 +7,7 @@ async function getComments(thread_id) {
     0 AS depth,
     CAST(c.comment_id AS CHAR(100)) AS order_key  -- Base order_key is the comment's ID
     FROM comments c
-    WHERE c.thread_id = 1 AND c.parent_id IS NULL
+    WHERE c.thread_id = ? AND c.parent_id IS NULL
 
     UNION ALL
 
@@ -16,7 +16,7 @@ async function getComments(thread_id) {
     CONCAT(ch.order_key, '-', c.comment_id) AS order_key  -- Append child ID to parent's order_key
     FROM comments c
     INNER JOIN CommentHierarchy ch ON c.parent_id = ch.comment_id
-    WHERE c.thread_id = 1
+    WHERE c.thread_id = ?
     )
 
     SELECT ch.comment_id, ch.user_id, u.username, ch.text, ch.likes, ch.created_date, ch.depth, 
@@ -27,12 +27,8 @@ async function getComments(thread_id) {
     ORDER BY ch.order_key;  -- Sort by hierarchical order_key
     `;
 
-  let params = {
-    threadid: thread_id,
-  };
-
   try {
-    const results = await db.query(getCommentSQL, params);
+    const results = await db.query(getCommentSQL, [thread_id, thread_id]);
 
     const comments = results[0];
 
