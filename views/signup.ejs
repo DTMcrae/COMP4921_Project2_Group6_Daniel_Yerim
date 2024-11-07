@@ -1,57 +1,70 @@
 <%- include("templates/header") %>
-<div class="container mt-5 mb-3">
-    <h1>Create User</h1>
-    <form
-        action="/signupSubmit"
-        method="post"
-        class="p-4 p-md-5 border rounded-3 bg-body-tertiary"
-    >
-        <div class="form-indication">
-            <p>*Username must be between 3 and 20 characters long</p>
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          src="/images/undraw_remotely_2j6y.svg"
+          alt="Image"
+          class="img-fluid"
+        />
+      </div>
+      <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="mb-4">
+              <h3>Create User</h3>
+              <p class="mb-4">
+                <p>*Username must be between 3 and 20 characters long</p>
+                <p>
+                    *Password must include at least one uppercase letter, one
+                    lowercase letter, one number, and one special character (10~20
+                    characters long)
+                </p>
+              </p>
+            </div>
+            <form action="/signupSubmit" method="post">
+              <div class="form-group first">
+                <input
+                  name="username"
+                  type="text"
+                  class="form-control"
+                  id="floatingUsername"
+                  placeholder="Username"
+                  required
+                />
+              </div>
+              <div class="form-group second">
+                <input
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  id="floatingEmail"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div class="form-group last mb-4">
+                <input
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  id="floatingPassword"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <input
+                type="submit"
+                value="Log In"
+                class="btn btn-block btn-primary"
+              />
+            </form>
+          </div>
         </div>
-        <div class="form-floating mb-3">
-            <input
-                name="username"
-                type="text"
-                class="form-control"
-                id="floatingUsername"
-                placeholder="Username"
-            />
-            <label for="floatingUsername">Username</label>
-        </div>
-        <div class="form-indication">
-            <p>*Please enter a valid email address (e.g., user@example.com)</p>
-        </div>
-        <div class="form-floating mb-3">
-            <input
-                name="email"
-                type="email"
-                class="form-control"
-                id="floatingEmail"
-                placeholder="Email"
-            />
-            <label for="floatingEmail">Email</label>
-        </div>
-        <div class="form-indication">
-            <p>
-                *Password must include at least one uppercase letter, one
-                lowercase letter, one number, and one special character (10~20
-                characters long)
-            </p>
-        </div>
-        <div class="form-floating mb-3">
-            <input
-                name="password"
-                type="password"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-            />
-            <label for="floatingPassword">Password</label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
-            Submit
-        </button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include("templates/footer") %>

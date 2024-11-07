@@ -87,7 +87,7 @@ async function searchThreads(searchTerm) {
         FROM thread AS t
         JOIN user AS u ON u.user_id = t.user_id
         LEFT JOIN profile_images AS p ON p.profile_id = u.profile_id
-        WHERE MATCH (t.title, t.text) AGAINST (? IN BOOLEAN MODE)
+        WHERE MATCH (t.title, t.text) AGAINST (? IN NATURAL LANGUAGE MODE)
     `;
     const [results] = await db.query(searchThreadsQuery, [searchWithWildcard]);
     return results;
@@ -178,7 +178,6 @@ async function toggleLikeThread(postData) {
   }
 }
 
-
 async function getUserLikeStatus(user_id, entity_id, entity_type) {
   const getStatusSQL = `
     SELECT is_like FROM user_likes
@@ -206,5 +205,5 @@ module.exports = {
   deleteThread,
   searchThreads,
   toggleLikeThread,
-  getUserLikeStatus
+  getUserLikeStatus,
 };

@@ -1,34 +1,52 @@
 <%- include("templates/header") %>
-<div class="container mt-5 mb-3">
-    <h1>Log in</h1>
-    <form
-        action="/loginSubmit"
-        method="post"
-        class="p-4 p-md-5 border rounded-3 bg-body-tertiary"
-    >
-        <div class="form-floating mb-3">
-            <input
-                name="email"
-                type="email"
-                class="form-control"
-                id="floatingEmail"
-                placeholder="Email"
-            />
-            <label for="floatingEmail">Email</label>
+<div class="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <img src="/images/login.svg" alt="Image" class="img-fluid" />
+      </div>
+      <div class="col-md-6 contents">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="mb-4">
+              <h3>Log In</h3>
+              <p class="mb-4">
+                Welcome back! Please enter your email and password to access
+                your account.
+              </p>
+            </div>
+            <form action="/loginSubmit" method="post">
+              <div class="form-group first">
+                <input
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+              <div class="form-group last mb-4">
+                <input
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+
+              <input
+                type="submit"
+                value="Log In"
+                class="btn btn-block btn-primary login-btn"
+              />
+            </form>
+          </div>
         </div>
-        <div class="form-floating mb-3">
-            <input
-                name="password"
-                type="password"
-                class="form-control"
-                id="floatingPassword"
-                placeholder="Password"
-            />
-            <label for="floatingPassword">Password</label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
-            Submit
-        </button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
 <%- include("templates/footer") %>

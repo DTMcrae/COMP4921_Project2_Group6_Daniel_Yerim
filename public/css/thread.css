@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
 }
 
 .profile-pic {
@@ -248,3 +248,14 @@ body {
     font-weight: bold;
 }
 
+body.dark-theme .like-button {
+    color: #fed85d;
+}
+
+body.dark-theme .dislike-button {
+    color: #C5D3E8;
+}
+
+body.dark-theme .comment-submit-btn {
+    color: #FFF;
+}

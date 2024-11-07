@@ -110,9 +110,10 @@ async function searchComments(searchTerm) {
     const searchWithWildcard = `*${searchTerm}*`;
 
     const searchThreadsQuery = `
-        SELECT 'comment' AS type, comment_id, thread_id, user_id, text, likes, created_date, parent_id
-        FROM comments
-        WHERE MATCH(text) AGAINST(? IN BOOLEAN MODE)
+        SELECT 'comment' AS type, c.comment_id, c.thread_id, c.user_id, c.text, c.likes, c.created_date, c.parent_id, t.title
+        FROM comments AS c
+        JOIN thread AS t ON t.thread_id = c.thread_id
+        WHERE MATCH(c.text) AGAINST(? IN NATURAL LANGUAGE MODE)
     `;
     const [results] = await db.query(searchThreadsQuery, [searchWithWildcard]);
     return results;
@@ -202,8 +203,6 @@ async function toggleLikeComment(postData) {
     throw error;
   }
 }
-
-
 
 async function getUserLikeStatus(user_id, entity_id, entity_type) {
   const getStatusSQL = `

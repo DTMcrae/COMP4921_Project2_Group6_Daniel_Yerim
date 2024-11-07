@@ -1,3 +1,12 @@
+.home-container h1 {
+    color: #243642;
+    /* color: #FFA24C; */
+}
+
+body.dark-theme .home-container h1 {
+    color: #FFFFFF;
+}
+
 .thread-card {
     border: none;
     border-radius: 10px;
@@ -114,32 +123,6 @@
     height: 150px;
 }
 
-/* .badge span {
-    background-color: #fffbec;
-    width: 60px;
-    height: 25px;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    display: flex;
-    color: #fed85d;
-    justify-content: center;
-    align-items: center
-} */
-
-/* .progress {
-    height: 10px;
-    border-radius: 10px
+body.dark-theme .my-comment-card-title span {
+    color: #C5D3E8;
 }
-
-.progress div {
-    background-color: red
-}
-
-.text1 {
-    font-size: 14px;
-    font-weight: 600
-}
-
-.text2 {
-    color: #a5aec0
-} */

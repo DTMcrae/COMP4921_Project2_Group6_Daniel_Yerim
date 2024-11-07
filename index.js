@@ -28,7 +28,7 @@ const mongodb_session_secret = process.env.MONGODB_SESSION_SECRET;
 
 //database connection
 const db_utils = include("database/db_utils");
-// const users = include("database/users");
+
 //checking database connection
 db_utils.printMySQLVersion();
 
@@ -66,13 +66,6 @@ const navLinks = [
   },
 ];
 
-// function isValidSession(req) {
-//     if (req.session.authenticated) {
-//         return true;
-//     }
-//     return false;
-// }
-
 function sessionValidation(req, res, next) {
   if (isValidSession(req)) {
     next();
@@ -85,7 +78,6 @@ function sessionValidation(req, res, next) {
 app.use("/", (req, res, next) => {
   app.locals.navLinks = navLinks;
   app.locals.currentURL = url.parse(req.url).pathname;
-  // res.locals.loggedIn = req.session.email ? true : false;
   res.locals.loggedIn = req.session.authenticated || false;
   res.locals.errorMessage = null;
   next();
@@ -98,11 +90,7 @@ app.get("/", async (req, res) => {
     const recentThreads = await db_utils.getRecentThreads();
     const likedThreads = await db_utils.getLikedThreads();
 
-    console.log("Recent Threads:", recentThreads);
-    console.log("Liked Threads:", likedThreads);
-
     res.render("index", {
-      loggedIn: loggedIn,
       recentThreads: recentThreads,
       likedThreads: likedThreads,
     });

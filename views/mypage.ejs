@@ -29,14 +29,6 @@
         <h5><%= user.email %></h5>
       </div>
     </div>
-    <!-- <div class="col-md-2">
-            <input
-                type="submit"
-                class="profile-edit-btn"
-                name="btnAddMore"
-                value="Edit Profile"
-            />
-        </div> -->
   </div>
   <div class="container">
     <div class="row">
@@ -71,9 +63,10 @@
     </div>
     <div class="threads-comments-container">
       <div class="col" id="myThreads">
-        <% myThreads.forEach(thread => { %>
+        <% if (myThreads && myThreads.length > 0) { %> <%
+        myThreads.forEach(thread => { %>
         <div
-          class="my-thread-card p-3 mb-2 d-flex flex-column"
+          class="my-thread-card p-3 mb-4 d-flex flex-column"
           id="thread-card-<%= thread.thread_id %>"
         >
           <div class="mt my-thread-delete-container">
@@ -109,13 +102,16 @@
             </div>
           </div>
         </div>
-        <% }); %>
+        <% }); %> <% } else { %>
+        <p>No threads available.</p>
+        <% } %>
       </div>
       <!-- end of threads -->
       <div class="col" id="myComments">
-        <% myComments.forEach(comment => { %>
+        <% if (myComments && myComments.length > 0) { %> <%
+        myComments.forEach(comment => { %>
         <div
-          class="my-thread-card p-3 mb-2 d-flex flex-column"
+          class="my-thread-card p-3 mb-4 d-flex flex-column"
           id="comment-card-<%= comment.comment_id %>"
         >
           <div class="mt my-thread-delete-container">
@@ -152,7 +148,9 @@
             </div>
           </div>
         </div>
-        <% }); %>
+        <% }); %> <% } else { %>
+        <p>No comments available.</p>
+        <% } %>
       </div>
       <!-- end of comments -->
     </div>
